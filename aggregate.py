@@ -1,1 +1,0 @@
-#prepare OLAP data cubes and save as tables in PG database 
