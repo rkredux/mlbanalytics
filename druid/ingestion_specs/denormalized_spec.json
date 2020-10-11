@@ -1,0 +1,87 @@
+{
+  "type": "index_parallel",
+  "ioConfig": {
+    "type": "index_parallel",
+    "inputSource": {
+      "type": "local",
+      "filter": "*.csv",
+      "baseDir": "/opt/data"
+    },
+    "inputFormat": {
+      "type": "csv",
+      "findColumnsFromHeader": true
+    }
+  },
+  "tuningConfig": {
+    "type": "index_parallel",
+    "partitionsSpec": {
+      "type": "dynamic"
+    }
+  },
+  "dataSchema": {
+    "dataSource": "denormalized_strike_events",
+    "granularitySpec": {
+      "type": "uniform",
+      "queryGranularity": "DAY",
+      "rollup": false,
+      "segmentGranularity": "DAY"
+    },
+    "timestampSpec": {
+      "column": "game_date",
+      "format": "auto"
+    },
+    "dimensionsSpec": {
+      "dimensions": [
+        "away_team",
+        "first_name",
+        "home_team",
+        "last_name",
+        "p_throws",
+        "stand",
+        "strike_type",
+        "top_value",
+        "venue_name",
+        "game_id", 
+        "id",
+        "inning",
+        "player_id"
+      ]
+    },
+    "metricsSpec": [
+      {
+        "name": "count",
+        "type": "count"
+      },
+      {
+        "name": "attendance",
+        "type": "longSum",
+        "fieldName": "attendance"
+      },
+      {
+        "name": "away_final_score",
+        "type": "longSum",
+        "fieldName": "away_final_score"
+      },
+      {
+        "name": "elapsed_time",
+        "type": "longSum",
+        "fieldName": "elapsed_time"
+      },
+      {
+        "name": "home_final_score",
+        "type": "longSum",
+        "fieldName": "home_final_score"
+      },
+      {
+        "name": "outs",
+        "type": "longSum",
+        "fieldName": "outs"
+      },
+      {
+        "name": "p_score",
+        "type": "longSum",
+        "fieldName": "p_score"
+      }
+    ]
+  }
+}
