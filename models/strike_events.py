@@ -4,7 +4,7 @@ class StrikeEvent():
         self.ab_id = kwargs.get('ab_id')
         self.batter_id = kwargs.get('batter_id')
         self.strike_type = kwargs.get('event')
-        self.game_id = kwargs.get('game_id')
+        self.game_id = kwargs.get('g_id')
         self.inning = kwargs.get('inning')
         self.outs = kwargs.get('o')
         self.p_score = kwargs.get('p_score')

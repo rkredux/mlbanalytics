@@ -11,6 +11,7 @@ def index_strike_events(db_connection, path_to_strike_events_file):
                 "INSERT INTO strike_events VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (strike_event.ab_id,
                 strike_event.batter_id,
+                strike_event.strike_type,
                 strike_event.game_id,
                 strike_event.inning,
                 strike_event.outs,
@@ -18,7 +19,6 @@ def index_strike_events(db_connection, path_to_strike_events_file):
                 strike_event.p_throws,
                 strike_event.pitcher_id,
                 strike_event.stand,
-                strike_event.strike_type,
                 strike_event.top_value)
             )
     db_connection.commit()

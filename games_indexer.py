@@ -8,14 +8,15 @@ def index_games(db_connection, path_to_games_file):
         for line in reader:
             game = Game(line)
             cur.execute(
-                "INSERT INTO games VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                "INSERT INTO games VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (game.id,
+                game.attendance,
                 game.home_team,
                 game.home_final_score,
-                game.game_date,
-                game.elapsed_time,
                 game.away_team,
                 game.away_final_score,
-                game.attendance)
-            )   
+                game.game_date,
+                game.elapsed_time,
+                game.venue_name)
+            )
     db_connection.commit()
