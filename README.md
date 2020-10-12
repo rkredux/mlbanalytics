@@ -12,11 +12,6 @@ Uses CSV Data From https://www.kaggle.com/pschale/mlb-pitch-data-20152018
 * [Druid](https://druid.apache.org/) - Columnar Storage Datawarehouse For Analytics; Stores Denormalized Table
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/) - To Serve User Queries
 
-## ⚡ Quick Deploy
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/colbyfayock/coronavirus-map-dashboard) [![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/colbyfayock/coronavirus-map-dashboard)
-
-Once deployed, you'll need to add an environment variable `GATSBY_MAPBOX_KEY` with an access token from your [mapbox.com](https://www.mapbox.com) account.
-
 
 ## 🚀 Getting Started
 
@@ -68,7 +63,7 @@ Then navigate to flask app running on http://127.0.0.1:5000/
 ```
 
 * You should now be running a new Flask app locally! 🎉
-Try the following end points from the browser which will query the Druid cluster
+Try the following end points from the browser which will query the Druid cluster and respond back with JSON results
 1. /player_score_count
 2. /games_per_venue
 3. /strike_type_count
