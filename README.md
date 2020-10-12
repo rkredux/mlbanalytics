@@ -76,5 +76,6 @@ Try the following end points from the browser which will query the Druid cluster
 
 TODO
 1. Render the data on the browser through D3.js (https://d3js.org/)
+2. Hook up Apache Superset (https://superset.apache.org/) Dashboard with Druid to visualize data in Superset. 
 
 
