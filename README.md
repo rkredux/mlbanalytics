@@ -7,10 +7,8 @@ Uses CSV Data From https://www.kaggle.com/pschale/mlb-pitch-data-20152018
 * [Players](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=player_names.csv) - Games 
 
 
-This project consists of three components 
-
 ## 🧰 This project consists of three components 
-* [PostgreSQL](https://www.postgresql.org/) - Primary transaction database 
+* [PostgreSQL](https://www.postgresql.org/) - Primary transaction database (stores strike events, games and player tables)
 * [Druid](https://druid.apache.org/) - Columnar Storage Datawarehouse For Analytics; Stores Denormalized Table
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/) - To Serve User Queries
 
@@ -23,21 +21,25 @@ Once deployed, you'll need to add an environment variable `GATSBY_MAPBOX_KEY` wi
 ## 🚀 Getting Started
 
 ### Requirements
-* [Gatsby CLI](https://www.npmjs.com/package/gatsby-cli)
-* [Yarn](https://yarnpkg.com/en/)
+* [PyDruid] (https://pythonhosted.org/pydruid/)
+* [Flask](https://anaconda.org/anaconda/flask)
 
-### Quick Start
-Run the following in your favorite terminal:
+### Setting up the App
+Run the following in your favorite terminal assuming you use Conda for Python env/package management
+if not run the equivalent using pip
 ```
-gatsby new [directory] https://github.com/colbyfayock/coronavirus-map-dashboard
+conda install -c conda-forge pydruid
+conda install -c anaconda flask
 ```
 
-### Starting from Scratch
-* Set up Yarn: https://yarnpkg.com/lang/en/docs/install/#mac-stable)[https://yarnpkg.com/lang/en/docs/install/
-* Install the Gatsby CLI globally:
+* Ingest the CSV data into PostgreSQL database
 ```
-yarn global add gatsby-cli
+1. Start an instance of PostgreSQL on localhost
+2. Using a psql client (either on terminal or pgAdmin client) set up the tables using DDL queries given in 
+database/ddl/tables/*.sql files - confirm tables were created before proceeding.
+3. Create a denormalized table by running the denormalized.sql query and export the file as CSV from pgAdmin client
 ```
+
 * Inside the directory of your choice, scaffold a new Gatsby site:
 ```
 gatsby new [directory] https://github.com/colbyfayock/coronavirus-map-dashboard
