@@ -28,6 +28,7 @@ if not run the equivalent using pip
 ```
 conda install -c conda-forge pydruid
 conda install -c anaconda flask
+conda install -c anaconda psycopg2
 ```
 
 * Ingest the CSV data into PostgreSQL database
