@@ -2,9 +2,9 @@
 This app does analytics on Major League Baseball open datasets available on Kaggle using Druid, Flask and Python
 
 Uses CSV Data From https://www.kaggle.com/pschale/mlb-pitch-data-20152018
-* [Strike Events](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=atbats.csv) - Strike Events
-* [Games](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=games.csv) - Games 
-* [Players](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=player_names.csv) - Games 
+* [Strike Events](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=atbats.csv)
+* [Games](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=games.csv)
+* [Players](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=player_names.csv) 
 
 
 ## 🧰 This project consists of three components 
@@ -21,8 +21,11 @@ Once deployed, you'll need to add an environment variable `GATSBY_MAPBOX_KEY` wi
 ## 🚀 Getting Started
 
 ### Requirements
-* [PyDruid] (https://pythonhosted.org/pydruid/)
+* [PyDruid](https://pythonhosted.org/pydruid/)
 * [Flask](https://anaconda.org/anaconda/flask)
+* [Postgres](https://www.postgresql.org/)
+* [Docker-compose](https://docs.docker.com/compose/install/)
+
 
 ### Setting up the App
 Run the following in your favorite terminal assuming you use Conda for Python env/package management
@@ -36,21 +39,42 @@ conda install -c anaconda flask
 ```
 1. Start an instance of PostgreSQL on localhost
 2. Using a psql client (either on terminal or pgAdmin client) set up the tables using DDL queries given in 
-database/ddl/tables/*.sql files - confirm tables were created before proceeding.
-3. Create a denormalized table by running the denormalized.sql query and export the file as CSV from pgAdmin client
+   ./database/ddl/tables/*.sql files - confirm tables were created before proceeding.
+3. Run indexer_main.py to load the data into Postgres. Confirm data loaded by querying the tables created
+4. Create a denormalized table by running the denormalized.sql query and export the file as CSV from pgAdmin client
 ```
 
-* Inside the directory of your choice, scaffold a new Gatsby site:
+* Start a Druid Cluster + Ingest data into Druid
 ```
-gatsby new [directory] https://github.com/colbyfayock/coronavirus-map-dashboard
+1. Run docker-compose.yml - this should give you a fully operational druid cluster
+2. Open Druid UI on localhost:8888 in your browser
+3. Use Druid console to ingest the denormalized CSV generated from Step 3 above - follow the steps
+   on this page - https://druid.apache.org/docs/latest/tutorials/tutorial-batch.html#loading-data-with-a-spec-via-console
+   Use the file ./druid/ingestion_specs/denormalized_spec.json file as your spec file. Once this file is submitted, it 
+   will trigger an ingestion task which can be monitored in Tasks console on localhost:8888 in the browser
+4. Confirm that the csv was ingested by going to the query pane and querying the data. 
+5. You are set - data is in Druid. 
 ```
-For example, if I want my installation in `~/Code/my-coronavirua-dashboard`, I would navigate to `~/Code` and run:
+
+* Start your Flask server to start sending queries from the browser
 ```
-gatsby new my-coronavirua-dashboard https://github.com/colbyfayock/coronavirus-map-dashboard
+Run the below three commands from terminal 
+
+export FLASK_APP=flaskr
+export FLASK_ENV=development
+flask run
+
+Then navigate to flask app running on http://127.0.0.1:5000/
 ```
-* Navigate to your new directory and run:
-```
-yarn develop
-```
-* You should now be running a new Gatsby site locally! 🎉
+
+* You should now be running a new Flask app locally! 🎉
+Try the following end points from the browser which will query the Druid cluster
+1. /player_score_count
+2. /games_per_venue
+3. /strike_type_count
+4. /strike_type_count/<strike_event> e.g. /strike_type_count/Home%20Run
+
+TODO
+1. Render the data on the browser through d3js
+
 
