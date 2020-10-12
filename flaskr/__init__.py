@@ -68,21 +68,8 @@ def create_app(test_config=None):
             key = entry["event"]["strike_type"]
             value = int(entry["event"]["count"])
             strike_type_count[key] = value
+
         return strike_type_count
-    
-
-    @app.route('/player_strike_count')
-    def player_score_count():
-        """Route to retrieve count of each strike type per player"""
-
-        group = druid_client.groupby(
-            datasource='denormalized_strike_events',
-            granularity='all',
-            intervals='2015-01-01/2018-01-01',
-            dimensions=["first_name", "last_name", "strike_type"],
-            aggregations={"count": doublesum("count")}
-        )
-        return group.result_json
 
         
     @app.route('/strike_type_count/<strike_event>')
@@ -103,8 +90,25 @@ def create_app(test_config=None):
             key = entry["event"]["strike_type"]
             value = int(entry["event"]["count"])
             strike_type_count[key] = value
+
         return strike_type_count
 
-    ####### App routes registration ends ##############
 
+    @app.route('/player_strike_count')
+    def player_score_count():
+        """Route to retrieve count of each strike type per player"""
+
+        group = druid_client.groupby(
+            datasource='denormalized_strike_events',
+            granularity='all',
+            intervals='2015-01-01/2018-01-01',
+            dimensions=["first_name", "last_name", "strike_type"],
+            aggregations={"count": doublesum("count")}
+        )
+
+        return group.result_json
+
+
+    ####### App routes registration ends ##############
+    
     return app
