@@ -36,9 +36,10 @@ conda install -c anaconda psycopg2
 1. Start an instance of PostgreSQL on localhost
 2. Using a psql client (either on terminal or pgAdmin client) set up the tables using DDL queries given in 
    ./database/ddl/tables/*.sql files - confirm tables were created before proceeding.
-3. Please update the full path to where the CSV files are stored on your machine
-4. Run indexer_main.py to load the data into Postgres. Confirm data loaded by querying the tables created in Postgres
-5. Create a denormalized table by running the denormalized.sql query and export the file as CSV from pgAdmin client
+3. Please update the full path to where the CSV files are stored on your machine in ./config.py
+4. Run python indexer_main.py to load the data into Postgres. Confirm data loaded by querying the tables created in Postgres
+5. Create a denormalized table by running the denormalized query in ./database/ddl/tables/denormalized.sql 
+   and export the file as CSV from pgAdmin client
 ```
 
 * Start a Druid Cluster + Ingest data into Druid
@@ -66,10 +67,12 @@ Then navigate to flask app running on http://127.0.0.1:5000/
 
 * You should now be running a new Flask app locally! 🎉
 Try the following end points from the browser which will query the Druid cluster and respond back with JSON results
-1. /player_score_count
-2. /games_per_venue
-3. /strike_type_count
-4. /strike_type_count/<strike_event> e.g. /strike_type_count/Home%20Run
+```
+1. /games_per_venue
+2. /strike_type_count
+3. /strike_type_count/<strike_event> e.g. /strike_type_count/Home%20Run
+4. /player_score_count
+```
 
 TODO
 1. Render the data on the browser through D3.js (https://d3js.org/)
