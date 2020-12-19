@@ -1,5 +1,5 @@
 #  MLB Analytics App
-This app does analytics on Major League Baseball open datasets available on Kaggle using Druid, Flask and Python
+This app does analytics on Major League Baseball open datasets available on Kaggle using Apache Druid, Flask and Python
 
 Uses CSV Data From https://www.kaggle.com/pschale/mlb-pitch-data-20152018
 * [Strike Events](https://www.kaggle.com/pschale/mlb-pitch-data-20152018?select=atbats.csv)
